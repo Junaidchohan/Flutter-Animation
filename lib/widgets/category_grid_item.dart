@@ -5,10 +5,10 @@ import 'package:ai_flutter_application/models/category.dart';
 
 class CategoryGridItem extends StatelessWidget {
   const CategoryGridItem({
-    Key? key,
+    super.key,
     required this.category,
     required this.onSelectCategory,
-  }) : super(key: key);
+  });
 
   final Category category;
   final void Function() onSelectCategory;
