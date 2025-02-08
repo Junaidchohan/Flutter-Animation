@@ -14,7 +14,7 @@ class FiltersNotifier extends StateNotifier<Map<Filter, bool>> {
           Filter.glutenFree: false,
           Filter.lactoseFree: false,
           Filter.vegetarian: false,
-          Filter.vegan: false,
+          Filter.vegan: false
         });
 
   void setFilters(Map<Filter, bool> chosenFilters) {
@@ -22,6 +22,7 @@ class FiltersNotifier extends StateNotifier<Map<Filter, bool>> {
   }
 
   void setFilter(Filter filter, bool isActive) {
+    // state[filter] = isActive; // not allowed! => mutating state
     state = {
       ...state,
       filter: isActive,
@@ -29,14 +30,14 @@ class FiltersNotifier extends StateNotifier<Map<Filter, bool>> {
   }
 }
 
-// ignore: avoid_types_as_parameter_names
-final filterProvider =
+final filtersProvider =
     StateNotifierProvider<FiltersNotifier, Map<Filter, bool>>(
-        (ref) => FiltersNotifier());
+  (ref) => FiltersNotifier(),
+);
 
 final filteredMealsProvider = Provider((ref) {
   final meals = ref.watch(mealsProvider);
-  final activeFilters = ref.watch(filterProvider);
+  final activeFilters = ref.watch(filtersProvider);
 
   return meals.where((meal) {
     if (activeFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
